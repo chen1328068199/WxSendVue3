@@ -60,7 +60,7 @@ function initTXSocket() {
     }
     txSocket.value.onopen = (e) => {
       if (txSocket.value && txSocket.value.readyState === 1) {
-        recordInter.value = setInterval(asrLoad, 200);//调用录音数据发送功能
+        recordInter.value = setInterval(asrLoad, 40);//调用录音数据发送功能
       }
     };
     txSocket.value.onerror = (e) => {
@@ -89,14 +89,14 @@ function asrLoad(){
   }
   if (recordArr.value.length === 0 && touchCode.value.includes('end-')) {
     clearInterval(recordInter.value);
-    txSocket.value.send(new Int8Array(6450));//置白，避免识别错误
+    txSocket.value.send(new Int8Array(1290));//置白，避免识别错误
     setTimeout(() => {
-      txSocket.value.send(new Int8Array(6450));
-    }, 200);
+      txSocket.value.send(new Int8Array(1290));
+    }, 40);
     setTimeout(() => {
       if (isIos) txSocket.value.close();//ios需主动关闭才不会报错
       else txSocket.value.send(JSON.stringify({ type: "end" }));
-    }, 400);
+    }, 80);
   }
 }
 
