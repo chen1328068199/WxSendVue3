@@ -7,6 +7,7 @@
 <script setup>
 import { ref,onMounted } from 'vue';
 import WxSend from './components/WxSend.vue';
+import WebRecorder from "./webrecorder.js";
 
 const tXLinkUrl = ref(''); 
 function handleGetAsrLink(){
@@ -17,6 +18,18 @@ const recorder = ref(null);//录音器对象
 const recordArr = ref([]);
 function handleInitAsr(){
   //初始化并将录音数据存储到recordArr数组里并将isListen置为true
+  recorder.value = new WebRecorder();
+  recorder.value.OnReceivedData = function (res) {
+    if (!isListen.value) isListen.value = true;
+    recordArr.value.push(res);
+  };
+  recorder.value.OnError = (err) => {
+    console.log(err, 'recode');
+    if (!((err + '').indexOf('Cannot read properties of null') > -1)) {
+      showToast('未检测到输入!');
+    }
+    recorder.value.stop();
+  };
 }
 
 onMounted(() => {
