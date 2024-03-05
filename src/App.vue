@@ -110,10 +110,12 @@ function clearTx(){
 
 function handleStartRecording(){
   //启动录音
+  recorder.value&&recorder.value.start();
 }
 
 function handleStartRecording(){
   //关闭录音
+  recorder.value&&recorder.value.stop();
 }
 
 const touchCode = ref('wait');//状态 noAuth-未获取到录音权限 noRtc-浏览器不支持rtc error-初始化异常 wait-等待 start-录音开始分三种(send,remove,edit) end-录音结束分两种（end-edit,end-over） load-已发送等待回传
