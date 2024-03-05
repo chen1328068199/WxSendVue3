@@ -62,7 +62,7 @@ function initTXSocket() {
           touchCode.value = 'wait';
           return showToast('未识别到文字！');
         }
-        handleSendQuestion(text.value);
+        // handleSendQuestion(text.value); //这里跟文本对话的ws进行交互
       }
     };
   }
